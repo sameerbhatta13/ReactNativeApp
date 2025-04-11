@@ -7,11 +7,11 @@ const Register = () => {
             <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps='handled'>
-                    <View className=' flex-1 bg-[#009688]' >
+                    <View className=' flex-1 ' >
                         <View className='mt-20 flex justify-center items-center'>
-                            <Text className='font-bold text-3xl' >Register here </Text>
+                            <Text className='font-bold text-3xl text-red-700' >Register </Text>
                         </View>
-                        <View className='flex flex-col justify-center mx-10 mt-8 bg-slate-300 shadow-orange-600 rounded-lg'>
+                        <View className='flex flex-col justify-center mx-10 mt-8 bg-[#798776] shadow-orange-600 rounded-lg'>
                             <Text className='mx-2 mt-5 mb-2 text-2xl'>Full Name</Text>
                             <TextInput className='bg-white w-[75%]  mx-2 border rounded-lg' placeholder='enter full name' />
 
@@ -21,14 +21,15 @@ const Register = () => {
                             <Text className='mx-2 mt-5 mb-2 text-2xl'>Phone Number</Text>
                             <TextInput className='bg-white w-[75%]  mx-2 border rounded-lg' placeholder='enter your Phone Number' />
 
-                            <Text className='mx-2 mt-5 mb-2 text-2xl'>Password</Text>
+                            <Text className='mx-2 mt-5 mb-2 text-2xl '>Password</Text>
                             <TextInput className='bg-white w-[75%]  mx-2 mb-4 border rounded-lg' secureTextEntry={true} placeholder='enter your password ' />
 
                             <TouchableOpacity className='bg-blue-500 rounded-lg p-3 mx-4 mb-3'>
                                 <Text className='text-white text-xl text-center'>Submit</Text>
                             </TouchableOpacity>
-                        </View>
+                        </View >
                     </View>
+
                 </ScrollView>
             </KeyboardAvoidingView>
         </>

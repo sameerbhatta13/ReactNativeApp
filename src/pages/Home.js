@@ -1,68 +1,57 @@
 import { View, Text, TouchableOpacity, TextInput, Image, ScrollView, Dimensions } from 'react-native'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { useEffect, useState } from 'react'
+import { StatusBar } from 'expo-status-bar';
+import { UserCircleIcon, BellIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Categories from '../constants/Categories';
+
+
 
 const Home = () => {
-    const WIDTH = Dimensions.get('screen').width
-
-    const [data, setData] = useState([])
-    async function fetchApi() {
-        const response = await fetch('https://fakestoreapi.com/products')
-        const result = await response.json()
-        setData(result)
-    }
-    useEffect(() => {
-        fetchApi()
-    }, [])
-
 
     return (
-        <View style={{ marginTop: 30, paddingHorizontal: 15 }}>
-            <View style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between'
-            }}>
-                <Text>Menu</Text>
-                <FontAwesome name="user-md" size={24} color="black" />
+        <View className='flex-1 bg-white'>
+            <StatusBar style='dark' />
+            <ScrollView showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 50 }}
+                className='space-y-6 pt-14'
+            >
+                {/* avatar and bell icon */}
+                <View className='mx-4 flex-row justify-between items-center mb-2'>
+                    <UserCircleIcon size={34} color='grey' />
+                    <BellIcon size={34} color='grey' />
+                </View>
 
-            </View>
-            {/* search */}
-            <TextInput placeholder='search' style={{ backgroundColor: 'grey', borderRadius: 10, marginVertical: 10, paddingHorizontal: 10 }}></TextInput>
+                {/* greeting and punchline */}
 
+                <View className='mx-4 space-y-3 mb-2 '>
+                    <Text style={{ fontSize: hp(1.7) }} className='text-neutral-700'>Hello, sameer</Text>
+                    <View>
+                        <Text style={{ fontSize: hp(3.8) }} className='font-semibold text-neutral-600'>Order Your Favourite,</Text>
+                    </View>
+                    <Text style={{ fontSize: hp(3.8) }} className='font-semibold text-neutral-600 '>stay at <Text className='text-amber-400'> home</Text></Text>
+                </View>
 
-            <View style={{
-                display: 'flex',
-                flexDirection: "row",
-                flexWrap: "wrap"
-            }} >
-                {
-                    data.map((item, index) => {
-                        return (
-                            <View key={index} style={{ widtht: WIDTH }}>
-                                <Image source={{ uri: item.image }} style={{
-                                    width: 75,
-                                    height: 100,
-                                    marginRight: 10,
-                                    borderRadius: 30,
-                                    resizeMode: "cover",
-                                    borderColor: "black",
-                                    shadowOpacity: 0.2,
-                                    shadowRadius: 3,
-                                    marginTop: 10
-                                }} />
+                {/* view for search bar */}
+                <View className='mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]'>
+                    <TextInput
+                        placeholder='search any recipe'
+                        placeholderTextColor={'gray'}
+                        style={{ fontSize: hp(1.7) }}
+                        className='flex-1 text-base mb-1 pl-3 tracking-wider'
+                    />
+                    <View className='bg-white rounded-full p-3'>
+                        <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color={'grey'} />
+                    </View>
+                </View>
 
-
-                                <View>
-                                    <Text>{item.title.substring(0, 20)}</Text>
-                                </View>
-                            </View>
-                        )
-                    })
-                }
-            </View>
-
-
+                {/* categories */}
+                <View>
+                    <Categories />
+                </View>
+            </ScrollView>
         </View>
     )
 }
