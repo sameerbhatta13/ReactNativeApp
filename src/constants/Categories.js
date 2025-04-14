@@ -1,9 +1,9 @@
 import { View, Text, ActivityIndicator, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native'
 
 import React, { useEffect, useState } from 'react'
+import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
 
-
-export default function Categories() {
+export default function Categories({ activeCategory, setActiveCategory }) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     async function fetchApi() {
@@ -17,22 +17,29 @@ export default function Categories() {
 
     }, [])
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity >
-            <View className='my-8 mr-7 rounded-full'>
+
+    const renderItem = ({ item }) => {
+        const isActive = item.category === activeCategory
+        return (<TouchableOpacity
+            onPress={() => setActiveCategory(item.category)}
+        >
+            <Animated.View
+                entering={FadeInDown.duration(500).springify()}
+                exiting={FadeOut}
+                className={`my-8 mr-7 rounded-lg ${isActive ? 'bg-black/20' : ''} p-2`}>
                 <Image
                     source={{ uri: item.image }}
                     style={{ width: 70, height: 70 }}
                     resizeMode="cover"
                 />
-                <Text className='text-neutral-500'>
+                <Text className={`text-neutral-500 ${isActive ? 'underline underline-offset-4' : ''}`}>
                     {item.category}
                 </Text>
 
-            </View>
+            </Animated.View>
         </TouchableOpacity>
-
-    )
+        )
+    }
 
     if (loading) {
         return (
@@ -41,10 +48,11 @@ export default function Categories() {
             </View>
         )
     }
-    const uniqueCategory = []
+    const categoryCount = []
     const filterData = data.filter((item) => {
-        if (!uniqueCategory.includes(item.category)) {
-            uniqueCategory.push(item.category)
+        const cat = item.category
+        categoryCount[cat] = (categoryCount[cat] || 0) + 1
+        if ((cat === 'electronics' && categoryCount[cat] === 2) || (cat !== 'electronics' && categoryCount[cat] === 1)) {
             return true
         }
         return false
@@ -60,6 +68,7 @@ export default function Categories() {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={{ paddingHorizontal: 15 }}
+        // className={`${activeCategory ? 'bg-amber-300' : 'bg-black/10'}`}
         />
     )
 }

@@ -9,7 +9,26 @@ import Categories from '../constants/Categories';
 
 
 
+
 const Home = () => {
+
+    const [activeCategory, setActiveCategory] = useState("men's clothing")
+    const [product, setProduct] = useState([])
+
+    const getProducts = async () => {
+        try {
+            const response = await fetch('https://fakestoreapi.com/products')
+            const result = await response.json()
+            // console.log('response data', result)
+
+        } catch (error) {
+            console.log('error', error.message)
+
+        }
+    }
+    useEffect(() => {
+        getProducts()
+    }, [])
 
     return (
         <View className='flex-1 bg-white'>
@@ -49,7 +68,7 @@ const Home = () => {
 
                 {/* categories */}
                 <View>
-                    <Categories />
+                    <Categories activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
                 </View>
             </ScrollView>
         </View>
