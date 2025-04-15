@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
 
 export default function Categories({ activeCategory, setActiveCategory }) {
+
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     async function fetchApi() {
@@ -20,19 +21,21 @@ export default function Categories({ activeCategory, setActiveCategory }) {
 
     const renderItem = ({ item }) => {
         const isActive = item.category === activeCategory
+
         return (<TouchableOpacity
             onPress={() => setActiveCategory(item.category)}
         >
             <Animated.View
                 entering={FadeInDown.duration(500).springify()}
                 exiting={FadeOut}
-                className={`my-8 mr-7 rounded-lg ${isActive ? 'bg-black/20' : ''} p-2`}>
+                className={`my-5 mr-7 rounded-lg ${isActive ? 'bg-black/20' : ''} p-2`}>
+
                 <Image
                     source={{ uri: item.image }}
                     style={{ width: 70, height: 70 }}
                     resizeMode="cover"
                 />
-                <Text className={`text-neutral-500 ${isActive ? 'underline underline-offset-4' : ''}`}>
+                <Text className={`text-neutral-500 ${isActive ? 'underline underline-offset-4 text-black' : ''}`}>
                     {item.category}
                 </Text>
 
@@ -48,6 +51,7 @@ export default function Categories({ activeCategory, setActiveCategory }) {
             </View>
         )
     }
+
     const categoryCount = []
     const filterData = data.filter((item) => {
         const cat = item.category
@@ -58,18 +62,29 @@ export default function Categories({ activeCategory, setActiveCategory }) {
         return false
     })
 
+    // const categoryMap = new Map()
+
+    // data.forEach(item => {
+    //     if (!categoryMap.has(item.category)) {
+    //         categoryMap.set(item.category, item)
+    //     }
+    // })
+    // const filterData = Array.from(categoryMap.values())
+
+
     return (
+        <View>
 
+            <FlatList
+                data={filterData}
+                renderItem={renderItem}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{ paddingHorizontal: 15 }}
+            />
 
-        <FlatList
-            data={filterData}
-            renderItem={renderItem}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{ paddingHorizontal: 15 }}
-        // className={`${activeCategory ? 'bg-amber-300' : 'bg-black/10'}`}
-        />
+        </View>
     )
 }
 
