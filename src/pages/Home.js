@@ -15,6 +15,8 @@ const Home = () => {
     const [activeCategory, setActiveCategory] = useState('')
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [search, setSearch] = useState('')
+    // console.log("search", search)
     // console.log("first", products)
 
 
@@ -75,6 +77,7 @@ const Home = () => {
                             placeholderTextColor={'gray'}
                             style={{ fontSize: hp(1.7) }}
                             className='flex-1 text-base mb-1 pl-3 tracking-wider'
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                         <View className='bg-white rounded-full p-3'>
                             <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color={'grey'} />
@@ -86,6 +89,8 @@ const Home = () => {
                         <Categories
                             activeCategory={activeCategory}
                             setActiveCategory={setActiveCategory}
+                            search={search}
+                            setSearch={setSearch}
                             products={products}
                         />
                     </View>

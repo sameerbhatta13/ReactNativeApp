@@ -6,6 +6,8 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { ChevronLeftIcon } from 'react-native-heroicons/outline'
 import { HeartIcon } from 'react-native-heroicons/solid'
 import { useNavigation } from '@react-navigation/native'
+import { Rating, AirbnbRating } from 'react-native-ratings';
+
 export default function ProductDetails(props) {
     let item = props.route.params
     const [isFav, setIsFav] = useState(false)
@@ -44,7 +46,15 @@ export default function ProductDetails(props) {
                     <Text className='text-xl font-thin text-center' style={{ width: wp(70) }}>{item.description}</Text>
                     <Text className='mt-4 font-bold text-xl' style={{ width: wp(70) }}>Price: {item.price}</Text>
 
-                    <Text className='mt-2 font-bold text-xl' style={{ width: wp(70) }}>Rating: {item.rating.rate}</Text>
+                    <Text className='mt-2 font-bold text-xl' style={{ width: wp(70) }}>Rating:
+                        <AirbnbRating
+                            count={5}
+                            defaultRating={item.rating.rate}
+                            size={20}
+                            isDisabled={true}
+                            showRating={false}
+                        />
+                    </Text>
 
                     <Text className='mt-2 my-2 font-bold text-xl' style={{ width: wp(70) }}>Rated By: {item.rating.count} <Text className='font-light'>people</Text> </Text>
                 </View>

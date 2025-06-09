@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, ScrollView, FlatList, Image, TouchableOp
 import React, { useEffect, useState } from 'react'
 import Animated, { FadeIn, FadeInDown, FadeOut } from 'react-native-reanimated'
 
-export default function Categories({ activeCategory, setActiveCategory }) {
+export default function Categories({ activeCategory, setActiveCategory, search, setSearch }) {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
